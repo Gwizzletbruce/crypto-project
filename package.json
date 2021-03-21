@@ -1,0 +1,22 @@
+{
+  "name": "crypto-project",
+  "version": "1.0.0",
+  "description": "Crypto Reddit trawl",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "git": "^0.1.5",
+    "handlebars": "^4.7.7",
+    "hbs": "^4.1.1",
+    "mongodb": "^3.6.5",
+    "reddit": "^1.2.1",
+    "request": "^2.88.2",
+    "snoowrap": "^1.22.0",
+    "yargs": "^16.2.0"
+  }
+}
