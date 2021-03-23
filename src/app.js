@@ -1,21 +1,23 @@
 const path = require("path")
+const algo = require("../public/js/algorithm.js")
 const express = require("express")
 const hbs = require("hbs")
 const snoowrap = require("snoowrap")
 const Reddit = require("reddit")
 const { title } = require("process")
+var chart = require("chart.js")
 
 
 const app = express()
 const port = process.env.PORT || 3000
 
 //paths for express
-const viewsPath = path.join(__dirname, "../templates/views")
-const partialsPath = path.join(__dirname, "../tamplates/partials")
+const viewsPath = path.join(__dirname, "../src/templates/views")
+const partialsPath = path.join(__dirname, "../src/templates/partials")
 
 //set up handlebars and views location
 app.set("views", viewsPath)
-app.set("view Engine", "hbs")
+app.set("view engine", "hbs")
 hbs.registerPartials(partialsPath)
 
 //set up static directory
@@ -23,101 +25,109 @@ app.use(express.static(path.join(__dirname, "../public")))
 
 //get and render pages
 
-app.get("", (res, req) => {
-    res.render("index", {
-        title: "Crypto App",
-        name: "Luke Nisbet",
-        comp: "LUNIS"
-    })
-})
+
 
 
 
 //********************SNOOWRAP CODE****************** */
 
-const r = new snoowrap({
-    userAgent: "Luke Nisbet",
-    clientId: "mOM7tyL_Mry0iA",
-    clientSecret: "ruk-vRDEwc2i8-A_QxN4GHJ8zCP4Nw",
-    refreshToken: "25504889-XI-AA-RwvPZUrh_XUlmoa_1YOi0Mtw"
-})
+// const r = new snoowrap({
+//     userAgent: "Luke Nisbet",
+//     clientId: "mOM7tyL_Mry0iA",
+//     clientSecret: "ruk-vRDEwc2i8-A_QxN4GHJ8zCP4Nw",
+//     refreshToken: "25504889-XI-AA-RwvPZUrh_XUlmoa_1YOi0Mtw"
+// })
+
+// const commentData = []
+// const commentInfo = ""
+// coinsStand = ["bitcoin", "ethereum", "litecoin", "cardano", "polkadot", "stellar", "binance coin", "monero",   "chainlink",  ]
+// coinsAcro = ["dot", "bnb", "tether", "btc", "eth", "dot", "ada", "ltc", "xlm","xmr",]
+// const coinsCountStandard = []
+// const coinsCountAcro = []
+// subToSearch = "CryptoCurrency"
 
 
-const getSub = async (sub, callback) => {
+
+// const getSubreddit = async (sub, callback) => {
      
-        const subreddit = await sub.getSubreddit("CryptoCurrency")
-        const topPosts = await subreddit.getTop({time: "day", limit: 10})
-        topPostId = []
+//         const subreddit = await sub.getSubreddit("CryptoCurrency")
+//         console.log("get sub here")
+//         return subreddit
         
-        coins = ["bitcoin", "ethereum", "litecoin", "cardano", "polkadot", "stellar", "binance coin", "monero", "xmr",  "chainlink", "dot", "bnb", "tether", "btc", "eth", "dot", "ada", "ltc", "xlm", ]
+        
+// }
 
-        subToSearch = "input"
+// const getTopPosts = async (sub, callback) => {
 
-        topPosts.forEach(post => {
-            topPostId.push({
-                id: post.id,
-            })
-        })
+//     const topPostID = []
+//     const topPosts = await sub.getSubreddit(subToSearch).getHot({time: "day", limit: 100})
+//     console.log("top posts here")
 
-        console.log(topPostId)
-
-        sub.getSubmission(JSON.stringify(topPostId[0].toString())).fetch().then( commentInfo => {
-            console.log(commentInfo.name)
-            console.log(commentInfo.comments[2].body)
-
+//     for (x=0; x< 10; x++) {
+//         topPostID.push(topPosts[x].id)
+        
+//         getSubmissions(topPostID[x])
+            
+//         }
     
-            for (i = 0; i< topPostId.length; i++) {
-
-            }
-
-        })
-        
-        
-
-        
-
-        
-        // const keywords = ["bitcoin", "ethereum", "nano", "litecoin", "ada", "stellar"]
-        // const titleText = data.title
-
-
-        // for (i=0; i< keywords.length; i++ ) {
-        //     if (titleText.search(keywords[i])) {
-        //         console.log("found")
-        //     } else {
-        //         console.log("not found")
-        //     }
-        // }
-        
-        console.log(coins)
-
+            
+//             console.log(topPostID)
     
-    }
-        
-
-
-
-getSub(r, (error, body) => {
-    if (error) {
-        console.log("error")
-    } else {
-        return console.log( body.comments)
-        
-    }
-
-})
-
-
+           
+            
     
     
     
-        //     if (titleText.search(keywords[i] = true) {
-    //         console.log("Found")
-    //     } 
-    //         console.log("Not Found")
-    //     }
+
+// }
+// const getSubmissions = (sub, callback) => {
     
-    // }
+//         r.getSubmission(sub).fetch().then( commentInfo => {
+//             for (i = 0; i < 20; i++) {
+//                 commentData.push(commentInfo.comments[i].body)
+//             }
+
+//             var countStand = 0
+//             var countAcro = 0
+            
+//             for (y = 0; y < commentData.length - 1; y++) {
+            
+//                 for (z = 0; z <= 7; z++) {
+//                     if (commentData[y].includes(coinsStand[z])) {
+//                         countStand += 1
+//                         coinsCountStandard.splice(z, 1, countStand)
+        
+//                     } 
+//                     else if (commentData[y].includes(coinsAcro[z])) {
+//                         countAcro += 1
+//                         coinsCountAcro.splice(z, 1, countAcro)
+
+//                 }
+                  
+//             }
+            
+//             }
+//             console.log("Standard")
+//             console.log(coinsCountStandard)
+//             console.log("Acronym")
+//             console.log(coinsCountAcro)
+//         })
+
+//     }
+
+// const topPostId = []
+// console.log(topPostId)
+
+// getSubreddit(r, (error, body) => {
+//     console.log("here")
+// })
+
+// getTopPosts(r, (error, body) => {
+    
+// })
+      
+       
+module.exports = coinsAcro, coinsStand
 
         
            
@@ -152,8 +162,14 @@ getSub(r, (error, body) => {
 // console.log(Promise.resolve(result))
 
 
+app.get("", (req, res) => {
+    res.render("index", {
+        title: "Crypto App",
+        name: "Luke Nisbet",
+        comp: "LUNIS"
+    })
+})
 
-
-// app.listen(port, () => {
-//     console.log("Server is up on port 3000")
-// })
+app.listen(port, () => {
+    console.log("Server is up on port 3000")
+})
