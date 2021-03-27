@@ -1,21 +1,18 @@
-const snoowrap = require("snoowrap")
+
+var unique = require("uniq")
+const jquery = require("../js/jquery.js")
+const requirejs = require("../js/require.js")
+const r = require("../js/snoowrap")
 const Reddit = require("reddit")
 const { title } = require("process")
 var chart = require("chart.js")
 
 
-
-//********************SNOOWRAP CODE****************** */
-
-const r = new snoowrap({
-    userAgent: "Luke Nisbet",
-    clientId: "mOM7tyL_Mry0iA",
-    clientSecret: "ruk-vRDEwc2i8-A_QxN4GHJ8zCP4Nw",
-    refreshToken: "25504889-XI-AA-RwvPZUrh_XUlmoa_1YOi0Mtw"
-})
-
+//emmpty arrays for trawled comments
 const commentData = []
 const commentInfo = ""
+
+//arrays for standard coin phrases and acronym- used to search through comments to find matches
 coinsStand = ["bitcoin", "ethereum", "litecoin", "cardano", "polkadot", "stellar", "binance coin", "monero",   "chainlink",  ]
 coinsAcro = ["dot", "bnb", "tether", "btc", "eth", "dot", "ada", "ltc", "xlm","xmr",]
 const coinsCountStandard = []
@@ -23,7 +20,7 @@ const coinsCountAcro = []
 subToSearch = "CryptoCurrency"
 
 
-
+//gets subreddit using String input, will change to variable input in future possibly
 const getSubreddit = async (sub, callback) => {
      
         const subreddit = await sub.getSubreddit("CryptoCurrency")
@@ -33,12 +30,18 @@ const getSubreddit = async (sub, callback) => {
         
 }
 
+//
+
+
+//async function to get top posts of sub reddit that is in the subTOSearch variable, with options to limit the amount of posts and the time frame
 const getTopPosts = async (sub, callback) => {
 
     const topPostID = []
     const topPosts = await sub.getSubreddit(subToSearch).getHot({time: "day", limit: 100})
     console.log("top posts here")
 
+
+    //pushes post IDs for top 10 posts into an array
     for (x=0; x< 10; x++) {
         topPostID.push(topPosts[x].id)
         
@@ -56,6 +59,8 @@ const getTopPosts = async (sub, callback) => {
     
 
 }
+
+// async fetching of comments from each top comment, comments are put into an array to be trawled through later
 const getSubmissions = (sub, callback) => {
     
         r.getSubmission(sub).fetch().then( commentInfo => {
@@ -83,10 +88,12 @@ const getSubmissions = (sub, callback) => {
             }
             
             }
-            console.log("Standard")
-            console.log(coinsCountStandard)
-            console.log("Acronym")
-            console.log(coinsCountAcro)
+            // console.log("Standard")
+            // console.log(coinsCountStandard)
+            // console.log("Acronym")
+            // console.log(coinsCountAcro)
+
+            
         })
 
     }
@@ -101,6 +108,14 @@ getSubreddit(r, (error, body) => {
 getTopPosts(r, (error, body) => {
     
 })
-      
+    
+
+
+
        
-module.exports = coinsAcro, coinsStand
+module.exports = {
+    acronymn: coinsCountAcro,
+    standard: coinsCountStandard
+}
+
+
